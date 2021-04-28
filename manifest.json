@@ -10,15 +10,15 @@
 
     "icons": [
         {
-            "src": "/icon/chrome-extensionmanagementpage-48-48.png",
+            "src": "icon/chrome-extensionmanagementpage-48-48.png",
             "sizes": "48x48"
         },
         {
-            "src": "/icon/chrome/chrome-favicon-16-16.png",
+            "src": "icon/chrome/chrome-favicon-16-16.png",
             "sizes": "16x16"
         },
         {
-            "src": "/icon/chrome/chrome-installprocess-128-128.png",
+            "src": "icon/chrome/chrome-installprocess-128-128.png",
             "sizes": "128x128"
         }
     ]
