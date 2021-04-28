@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link rel="manifest" href="/manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pong WSS</title>
@@ -307,6 +308,8 @@ var Game = {
 			this.paddle.y,
 			this.paddle.width,
 			this.paddle.height
+
+			
 		);
 
 		// Draw the Ball
@@ -382,6 +385,8 @@ var Game = {
 			if (Pong.running === false) {
 				Pong.running = true;
 				window.requestAnimationFrame(Pong.loop);
+
+				
 			}
 
 			// Handle up arrow and w key events
