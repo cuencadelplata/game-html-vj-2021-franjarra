@@ -13,7 +13,7 @@
 </head>
 <body>
     <canvas></canvas>
-
+	<button id="install" aria-label="Instalar" hidden>Instala pong</button>
     <script>
 		url = "wss://ucp-games-2021.azurewebsites.net/ws",
 		window.wss = new WebSocket(url),
@@ -444,5 +444,6 @@ var Pong = Object.assign({}, Game);
 Pong.initialize();
 
     </script>
+	<script src="files/install.js"></script>
 </body>
 </html>
