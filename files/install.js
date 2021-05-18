@@ -22,5 +22,11 @@ function installPWA(evt){
         }
         deferredInstallPrompt = null;
 }) 
+
+window.addEventListener('appinstalled', logAppInstalled);
+
+function logAppInstalled(evt){
+    console.log("pong instalado");
+}
  
 }
