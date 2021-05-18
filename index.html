@@ -12,10 +12,12 @@
     </style>
 </head>
 <body>
+	<button id="install" aria-label="Instalar" hidden> Instala pong</button>
     <canvas></canvas>
 	
-	<button id="install" aria-label="Instalar" hidden> Instala pong</button>
-    <script>
+
+    
+	<script>
 		url = "wss://ucp-games-2021.azurewebsites.net/ws",
 		window.wss = new WebSocket(url),
 		window.wss.onopen = function(event){
