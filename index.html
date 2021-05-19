@@ -19,7 +19,15 @@
 	</canvas>
 	
 
-    <script src="files/pwabuilder-sw.js"></script>
+    <script>
+		// This is the "Offline page" service worker
+
+		import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+
+		const el = document.createElement('pwa-update');
+		document.body.appendChild(el);
+	</script>
+	
 	<script>
 		url = "wss://ucp-games-2021.azurewebsites.net/ws",
 		window.wss = new WebSocket(url),
