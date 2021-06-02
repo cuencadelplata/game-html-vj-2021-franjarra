@@ -3,7 +3,7 @@ const OFFLINE_URL = 'offline.html';
 
 
 const recursos_Cachear = [
-  'index.html'
+  '/index.html'
 ];
 
 self.addEventListener('install', function(event) {
