@@ -2,7 +2,7 @@ const CACHE_NAME = 'offline';
 const OFFLINE_URL = 'offline.html';
 
 
-const recursos_Cachear = ['index.html'];
+const recursos_Cachear = ['/index.html'];
 
 //self.addEventListener('install', function(event) {
   //console.log('[ServiceWorker] Install');
