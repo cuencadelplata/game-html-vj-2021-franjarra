@@ -4,20 +4,31 @@ const OFFLINE_URL = 'offline.html';
 
 const recursos_Cachear = [
   '/',
-  'index.html'];
+  'index.html',];
 
-self.addEventListener('install', function(event) {
-  console.log('[ServiceWorker] Install');
+//self.addEventListener('install', function(event) {
+  //console.log('[ServiceWorker] Install');
   
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME);
+  //event.waitUntil((async () => {
+    //const cache = await caches.open(CACHE_NAME);
     // Setting {cache: 'reload'} in the new request will ensure that the response
     // isn't fulfilled from the HTTP cache; i.e., it will be from the network.
-    await cache.add(new Request(OFFLINE_URL, {cache: 'reload'}));
-  })());
+    //await cache.add(new Request(OFFLINE_URL, {cache: 'reload'}));
+  //})());
   
-  self.skipWaiting();
+  //self.skipWaiting();
+//});
+
+self.addEventListener('install', (event) => {
+  console.log('[Service Worker] Install');
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+          console.log('[Servicio Worker] Almacena todo en caché: contenido e intérprete de la aplicación');
+      return cache.addAll(recursos_Cachear);
+    })
+  );
 });
+
 
 self.addEventListener('activate', (event) => {
   console.log('[ServiceWorker] Activate');
