@@ -12,19 +12,24 @@
     </style>
 </head>
 <body>
-	<h1>ESTOY TESTEANDO LOCO</h1>
+	<h1>TEST</h1>
 	<button id="butInstall" aria-label="Instalation"> Instalate pong</button>
     <canvas>
 		
 	</canvas>
 
-	<script src="/files/scripts.js"></script>
+	<script src= "files/scripts.js"></script>
 	
 	<script>
-		url = "wss://ucp-games-2021.azurewebsites.net/ws",
-		window.wss = new WebSocket(url),
-		window.wss.onopen = function(event){
+
+		url = "wss://ucp-games-2021.azurewebsites.net/multiplayer";
+		window.multiplayer = new WebSocket(url);
+		window.playerID = "Francisco";
+		window.multiplayer.onopen = function(event){
 			console.log("Se conecto");
+		};
+		window.multiplayer.onmessage = function(event){
+			console.log(event.data);
 		};
 		
 		
@@ -424,10 +429,10 @@
 			victor.score++;
 			var evento1 = {
 						"game" : "Pong Epico",
-						"event" : "puntos de la partida",
-						"value" : victor.score.toString()
+						"Player" : "Francisco",
+						"value" : victor.score
 					};
-			window.wss.send(JSON.stringify(evento1));
+			window.multiplayer.send(JSON.stringify(evento1));
 			beep2.play();
 		},
 

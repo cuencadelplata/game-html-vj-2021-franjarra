@@ -1,18 +1,32 @@
 const CACHE_NAME = 'offline';
-const OFFLINE_URL = ['index.html'];
+const OFFLINE_URL = 'offline.html';
 
-self.addEventListener('install', function(event) {
-  console.log('[ServiceWorker] Install');
+
+const recursos_Cachear = ['/index.html'];
+
+//self.addEventListener('install', function(event) {
+  //console.log('[ServiceWorker] Install');
   
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME);
+  //event.waitUntil((async () => {
+    //const cache = await caches.open(CACHE_NAME);
     // Setting {cache: 'reload'} in the new request will ensure that the response
     // isn't fulfilled from the HTTP cache; i.e., it will be from the network.
-    await cache.add(new Request(OFFLINE_URL, {cache: 'reload'}));
-  })());
+    //await cache.add(new Request(OFFLINE_URL, {cache: 'reload'}));
+  //})());
   
-  self.skipWaiting();
+  //self.skipWaiting();
+//});
+
+self.addEventListener('install', (event) => {
+  console.log('[Service Worker] Install');
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+          console.log('[Servicio Worker] Almacena todo en caché: contenido e intérprete de la aplicación');
+      return cache.addAll(recursos_Cachear);
+    })
+  );
 });
+
 
 self.addEventListener('activate', (event) => {
   console.log('[ServiceWorker] Activate');
@@ -28,25 +42,18 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-self.addEventListener('fetch', function(event) {
-  // console.log('[Service Worker] Fetch', event.request.url);
-  if (event.request.mode === 'navigate') {
-    event.respondWith((async () => {
-      try {
-        const preloadResponse = await event.preloadResponse;
-        if (preloadResponse) {
-          return preloadResponse;
-        }
 
-        const networkResponse = await fetch(event.request);
-        return networkResponse;
-      } catch (error) {
-        console.log('[Service Worker] Fetch failed; returning offline page instead.', error);
-
-        const cache = await caches.open(CACHE_NAME);
-        const cachedResponse = await cache.match(OFFLINE_URL);
-        return cachedResponse;
-      }
-    })());
-  }
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((r) => {
+          console.log('[Servicio Worker] Obteniendo recurso: '+event.request.url);
+      return r || fetch(event.request).then((response) => {
+                return caches.open(CACHE_NAME).then((cache) => {
+          console.log('[Servicio Worker] Almacena el nuevo recurso: '+event.request.url);
+          cache.put(event.request, response.clone());
+          return response;
+        });
+      });
+    })
+  );
 });
