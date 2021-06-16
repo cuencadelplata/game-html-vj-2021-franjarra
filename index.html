@@ -24,12 +24,9 @@
 
 		url = "wss://ucp-games-2021.azurewebsites.net/multiplayer";
 		window.multiplayer = new WebSocket(url);
-		window.playerID = "Francisco";
+		window.playerID = "player" + parseInt((Math.random() * (1000 - 1) + 1));
 		window.multiplayer.onopen = function(event){
 			console.log("Se conecto");
-		};
-		window.multiplayer.onmessage = function(event){
-			console.log(event.data);
 		};
 		
 		window.multiplayer.onmessage = function(event){ 
