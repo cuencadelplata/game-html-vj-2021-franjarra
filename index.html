@@ -24,7 +24,15 @@
 
 		url = "wss://ucp-games-2021.azurewebsites.net/multiplayer";
 		window.multiplayer = new WebSocket(url);
-		window.playerID = "player" + parseInt((Math.random() * (1000 - 1) + 1));
+		window.playerID = localStorage.getItem('playerID'); 
+		if (typeof window.playerID === 'undefined' || window.playerID == null) 
+		{
+			 var playerIDValue = "player-"+ parseInt((Math.random() * (100000 - 1) + 1)); 
+			 localStorage.setItem('playerID') = playerIDValue; 
+			 window.playerID = playerIDValue;
+		}
+
+	
 		window.multiplayer.onopen = function(event){
 			console.log("Se conecto");
 		};
@@ -244,12 +252,6 @@
 				if (!rounds[this.round + 1]) {
 					this.over = true;
 					setTimeout(function () { Pong.endGameMenu('Winner!'); }, 1000);
-					var evento = {
-						"game" : "Pong Epico",
-						"event" : "Win",
-						"value" : "Partida ganada"
-					};
-					window.wss.send(JSON.stringify(evento));
 
 				} else {
 					// If there is another round, reset all the values and increment the round number.
@@ -261,24 +263,12 @@
 					this.round += 1;
 
 					beep3.play();
-					var evento = {
-						"game" : "Pong Epico",
-						"event" : "siguiente ronda",
-						"value" : this.round.toString()
-					};
-					window.wss.send(JSON.stringify(evento));
 				}
 			}
 			// Check to see if the paddle/AI has won the round.
 			else if (this.paddle.score === rounds[this.round]) {
 				this.over = true;
 				setTimeout(function () { Pong.endGameMenu('Game Over!'); }, 1000);
-				var evento1 = {
-						"game" : "Pong Epico",
-						"event" : "Game over",
-						"value" : "perdiste u.u"
-					};
-					window.wss.send(JSON.stringify(evento1));
 			}
 		},
 
@@ -430,8 +420,8 @@
 			victor.score++;
 			var evento1 = {
 						"game" : "Pong Epico",
-						"Player" : "Francisco",
-						"value" : victor.score,
+						"player" : 	window.playerID,
+						"value" : paddle.score,
 					};
 			window.multiplayer.send(JSON.stringify(evento1));
 			beep2.play();
