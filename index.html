@@ -32,6 +32,10 @@
 			console.log(event.data);
 		};
 		
+		window.multiplayer.onmessage = function(event){ 
+			var datos = JSON.parse(event.data);
+			 console.log(datos.players); 
+		};
 		
 	
 		// Audio (Game sounds) in base64 format.
@@ -430,7 +434,7 @@
 			var evento1 = {
 						"game" : "Pong Epico",
 						"Player" : "Francisco",
-						"value" : victor.score
+						"value" : victor.score,
 					};
 			window.multiplayer.send(JSON.stringify(evento1));
 			beep2.play();
